@@ -188,19 +188,6 @@ def home():
         else:
             sentiment = 'Error: None'
             img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
-        # match sentiment_score:
-        #     case -1:
-        #         sentiment = 'Negative'
-        #         img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'sad.png')
-        #     case 0:
-        #         sentiment = 'Neutral'
-        #         img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
-        #     case 1:
-        #         sentiment = 'Positive'
-        #         img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'smiling.png')
-        #     case _:
-        #         sentiment = 'Error: None'
-        #         img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
 
     # Rendering the home.html template with the results
     return render_template('home.html', text=text, sentiment=sentiment, image=img_filename, model_type=model_type)
