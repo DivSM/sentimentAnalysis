@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Sentiment Analysis</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container my-5">
+        <h2>Reddit Sentiment Analysis</h2>
+
+        <!-- Form to enter subreddit name -->
+        <form action="/reddit-sentiment" method="POST">
+            <div class="form-group">
+                <label for="subreddit_name">Enter Subreddit Name:</label>
+                <input type="text" class="form-control" id="subreddit_name" name="subreddit_name" placeholder="e.g., python" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Sentiments</button>
+        </form>
+
+        <hr>
+
+        <!-- Display Sentiment Results -->
+        {% if sentiment_results %}
+        <h4>Sentiment Results for subreddit: {{ subreddit_name }}</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Post Title</th>
+                    <th>Sentiment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in sentiment_results %}
+                <tr>
+                    <td>{{ result.post }}</td>
+                    <td>{{ result.sentiment }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+
+</html>

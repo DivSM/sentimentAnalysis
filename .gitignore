@@ -1,0 +1,25 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environment folder
+myenv/
+
+# Ignore any environment configuration files
+.env
+
+# Ignore any logs or database files
+*.log
+*.sqlite
+
+# Ignore the .vscode/ or IDE specific files
+.vscode/
+
+# Ignore deployment files
+Dockerfile
+docker-compose.yml
+
+# Ignore system files (macOS or Windows)
+.DS_Store
+Thumbs.db

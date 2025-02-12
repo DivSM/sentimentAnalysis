@@ -1,0 +1,67 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+/* Add padding for tabs */
+.nav-tabs .nav-link {
+    padding: 15px;
+}
+
+/* Container and card styling */
+.container {
+    max-width: 1200px;
+    margin-top: 50px;
+}
+
+/* Tabs Styling */
+.nav-tabs .nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Button and form styling */
+button.btn {
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+button.btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+img.img-fluid {
+    max-width: 150px;  
+    max-height: 150px; 
+    border-radius: 50%;
+    margin-top: 20px;
+}
+
+/* Model Selection Dropdown */
+select.form-control {
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #495057;
+    transition: 0.3s;
+}
+
+select.form-control:focus {
+    border-color: #007bff;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+}

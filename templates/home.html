@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f75621122b.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling.css') }}">
+</head>
+<body>
+    <div class="container my-5">
+        <div class="card shadow-lg p-4 rounded-lg">
+            <div class="card-header text-center">
+                <h2 class="h3 font-weight-bold text-primary">Sentiment Analysis</h2>
+                <div class="instruction-card">
+                    Enter some text and select a model to get sentiment analysis.
+                </div>
+            </div>
+            <div class="card-body">
+                <form action="/" method="POST">
+                    <div class="form-group">
+                        <textarea name="text" class="form-control" rows="5" placeholder="Enter text here..." required>{{ text }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="model_type">Select Model</label>
+                        <select name="model_type" class="form-control" id="model_type" required>
+                            <option value="lstm" {% if model_type == 'lstm' %}selected{% endif %}>LSTM</option>
+                            <option value="logistic_regression" {% if model_type == 'logistic_regression' %}selected{% endif %}>Logistic Regression</option>
+                            <option value="naive_bayes" {% if model_type == 'naive_bayes' %}selected{% endif %}>Naive Bayes</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Analyze Sentiment</button>
+                </form>
+            </div>
+
+            {% if sentiment %}
+            <div class="result mt-4 text-center">
+                <p><strong>Sentiment:</strong> {{ sentiment }}</p>
+                <img src="{{ image }}" alt="Sentiment Image" width="100">
+            </div>
+            {% endif %}
+
+            <div class="mt-4">
+                <a href="{{ url_for('reddit_sentiment') }}" class="btn btn-info btn-block">Go to Reddit Sentiment Analysis</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
