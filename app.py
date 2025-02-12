@@ -176,19 +176,31 @@ def home():
             print(sentiment_score)  # Output: [-1] or [0] or [1]
 
         # Set sentiment and image based on the prediction
-        match sentiment_score:
-            case -1:
-                sentiment = 'Negative'
-                img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'sad.png')
-            case 0:
-                sentiment = 'Neutral'
-                img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
-            case 1:
-                sentiment = 'Positive'
-                img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'smiling.png')
-            case _:
-                sentiment = 'Error: None'
-                img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
+        if sentiment_score == -1:
+            sentiment = 'Negative'
+            img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'sad.png')
+        elif sentiment_score == 0:
+            sentiment = 'Neutral'
+            img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
+        elif sentiment_score == 1:
+            sentiment = 'Positive'
+            img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'smiling.png')
+        else:
+            sentiment = 'Error: None'
+            img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
+        # match sentiment_score:
+        #     case -1:
+        #         sentiment = 'Negative'
+        #         img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'sad.png')
+        #     case 0:
+        #         sentiment = 'Neutral'
+        #         img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
+        #     case 1:
+        #         sentiment = 'Positive'
+        #         img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'smiling.png')
+        #     case _:
+        #         sentiment = 'Error: None'
+        #         img_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'neutral.png')
 
     # Rendering the home.html template with the results
     return render_template('home.html', text=text, sentiment=sentiment, image=img_filename, model_type=model_type)
