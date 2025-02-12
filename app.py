@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import numpy as np
 import pandas as pd
 import re
@@ -10,6 +10,8 @@ from nltk.stem import WordNetLemmatizer
 import tensorflow as tf
 import scipy.sparse
 import praw
+import requests
+import gdown
 
 IMAGE_FOLDER = os.path.join('static', 'img_pool')
 
@@ -17,12 +19,41 @@ app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = IMAGE_FOLDER
 
+FILE_ID = "1H7as1SVEhFj7J_YIxUBBSXLib5YFkZkV"
+MODEL_PATH = "lstm_m.pkl"
+
+def download_model():
+    print("Downloading model from Google Drive...")
+    
+    # Google Drive URL for direct download
+    download_url = f"https://drive.google.com/uc?id={FILE_ID}"
+    
+    # Using gdown to download the file
+    gdown.download(download_url, MODEL_PATH, quiet=False)
+    
+    print("Model downloaded successfully!")
+
+def load_model():
+    try:
+        # Check if model exists and is correct
+        if not os.path.exists(MODEL_PATH):
+            download_model()
+
+        # Open the file in binary read mode
+        with open(MODEL_PATH, 'rb') as f:
+            model = pickle.load(f)  # Try to load the model
+        return model
+    except Exception as e:
+        print(f"Error loading model: {e}")
+        return None
+
+lstm_model = load_model()
+
 def init():
     global lstm_model, tokenizer, lr_model, nb_model, tfidf
 
-    # Load the LSTM model
-    with open('lstm_m.pkl', 'rb') as f:
-        lstm_model = pickle.load(f)
+    # Loading the LSTM model via drive since size is > 100MB
+
     # Load LSTM tokenizer
     with open('tokenizer_lstm.pkl', 'rb') as f:
         tokenizer = pickle.load(f)
