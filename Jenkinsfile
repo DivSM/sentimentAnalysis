@@ -22,31 +22,20 @@ pipeline {
             }
         }
 
-        stage('Run Flask App') {
+        stage('Build the Flask App') {
             steps {
-                echo 'Running Flask app'
-                bat 'start /B venv\\Scripts\\python app.py > flask_app.log 2>&1'  // Run Flask app in background and log output
-                // Capture the PID of Flask app
                 script {
-                    def pid = bat(script: 'tasklist /FI "IMAGENAME eq python.exe" /NH', returnStdout: true).trim()
-                    echo "Flask app PID: ${pid}"
-                }
-            }
-        }
+                    echo 'Building the Flask app'
+                    // Start the Flask app in the background
+                    bat 'start /B venv\\Scripts\\python app.py'  // Run Flask app in background
 
-        stage('Find and Kill Flask App') {
-            steps {
-                script {
-                    // Run tasklist and capture output
-                    def pid = bat(script: 'for /f "tokens=2 delims=," %a in (\'tasklist /fi "imagename eq python.exe" /fo csv\') do @echo %a', returnStdout: true).trim()
+                    // Wait for a short time (e.g., 10 seconds) to let the app start
+                    sleep(10)
+
+                    // Kill the Flask app by terminating the Python process (this kills all python processes running, be cautious!)
+                    bat 'taskkill /F /IM python.exe'
                     
-                    // Check if the PID was found
-                    if (pid) {
-                        echo "Found Flask app running with PID: ${pid}. Terminating the process."
-                        bat "taskkill /F /PID ${pid}"
-                    } else {
-                        echo "No Flask app process found."
-                    }
+                    echo 'App started and killed successfully'
                 }
             }
         }
