@@ -34,11 +34,20 @@ pipeline {
             }
         }
 
-        // Stage to stop the Flask app using PID (you need to capture the specific Flask app PID)
-        stage('Stop Flask App') {
+        stage('Find and Kill Flask App') {
             steps {
-                echo 'Stopping Flask app'
-                bat 'taskkill /F /PID ${pid}'  // Kill Flask app using PID (modify according to how you capture PID)
+                script {
+                    // Find the process ID (PID) of the Flask app
+                    def pid = bat(script: 'for /f "tokens=5" %%a in (\'tasklist /fi "imagename eq python.exe" /fo csv\') do @echo %%a', returnStdout: true).trim()
+                    
+                    // Check if a process was found and kill it
+                    if (pid) {
+                        echo "Found Flask app running with PID: ${pid}. Terminating the process."
+                        bat "taskkill /F /PID ${pid}"
+                    } else {
+                        echo "No Flask app process found."
+                    }
+                }
             }
         }
     }
