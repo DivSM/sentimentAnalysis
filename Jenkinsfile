@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Checking out repository'
                 // Checkout the repository
-                git branch: 'main', url: "${REPO_URL}"
+                git branch: 'master', url: "${REPO_URL}"
             }
         }
 
