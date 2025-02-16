@@ -37,10 +37,10 @@ pipeline {
         stage('Find and Kill Flask App') {
             steps {
                 script {
-                    // Find the process ID (PID) of the Flask app
-                    def pid = bat(script: 'for /f "tokens=5" %%a in (\'tasklist /fi "imagename eq python.exe" /fo csv\') do @echo %%a', returnStdout: true).trim()
+                    // Run tasklist and capture output
+                    def pid = bat(script: 'for /f "tokens=2 delims=," %a in (\'tasklist /fi "imagename eq python.exe" /fo csv\') do @echo %a', returnStdout: true).trim()
                     
-                    // Check if a process was found and kill it
+                    // Check if the PID was found
                     if (pid) {
                         echo "Found Flask app running with PID: ${pid}. Terminating the process."
                         bat "taskkill /F /PID ${pid}"
