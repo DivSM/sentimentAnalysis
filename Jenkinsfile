@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Set environment variables
-        VENV_PATH = 'venv'
+        VENV_PATH = 'myenv'
         REPO_URL = 'https://github.com/DivSM/sentimentAnalysis.git' 
     }
 
@@ -21,9 +21,9 @@ pipeline {
                 script {
                     echo 'Creating a virtual environment'
                     // Create a virtual environment
-                    sh 'python3 -m venv ${VENV_PATH}'
-                    sh '${VENV_PATH}/bin/pip install --upgrade pip'
-                    sh '${VENV_PATH}/bin/pip install -r requirements.txt'
+                    sh 'python3 -m myenv ${VENV_PATH}'
+                    sh '${VENV_PATH}/Scripts/pip install --upgrade pip' // Windows specific path
+                    sh '${VENV_PATH}/Scripts/pip install -r requirements.txt' // Windows specific path
                 }
             }
         }
@@ -31,8 +31,8 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    
                     echo 'Testing'
+                    // Add test commands here if needed
                 }
             }
         }
@@ -41,8 +41,8 @@ pipeline {
             steps {
                 script {
                     echo 'Running app'
-                    // Run Flask app
-                    sh '${VENV_PATH}/bin/python app.py'
+                    // Run Flask app (not using nohup or background execution)
+                    sh '${VENV_PATH}/Scripts/python app.py' // Windows specific path
                 }
             }
         }
