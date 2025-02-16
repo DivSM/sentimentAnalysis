@@ -17,7 +17,6 @@ myenv/
 .vscode/
 
 # Ignore deployment files
-Dockerfile
 docker-compose.yml
 
 # Ignore system files (macOS or Windows)
