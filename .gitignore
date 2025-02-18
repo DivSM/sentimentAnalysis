@@ -19,6 +19,10 @@ myenv/
 # Ignore deployment files
 docker-compose.yml
 
+# Ignore jenkins executables
+jenkins.war
+jenkins.war.*
+
 # Ignore system files (macOS or Windows)
 .DS_Store
 Thumbs.db
